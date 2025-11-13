@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(15, 40px);
+  grid-template-rows: repeat(15, 40px);
+  gap: 2px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #aaa;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+#rack {
+  margin-top: 20px;
+}
+
+.tile {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: #ffd700;
+  border: 1px solid #333;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: grab;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 40px;
+}
