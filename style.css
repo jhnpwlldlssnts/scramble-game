@@ -6,6 +6,133 @@ body {
   padding: 20px;
 }
 
+/* Player Setup Overlay */
+#player-setup-overlay, #transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.setup-modal, .transition-modal {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+  text-align: center;
+  max-width: 500px;
+}
+
+.setup-modal h2, .transition-modal h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.player-count-buttons {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.player-count-buttons button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.player-count-buttons button:hover {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+.single-player-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ready-btn {
+  padding: 15px 40px;
+  font-size: 20px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ready-btn:hover {
+  background: #229954;
+  transform: scale(1.05);
+}
+
+/* Current Turn Indicator */
+#current-turn {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 20px 0;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Scoreboard */
+#scoreboard {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+
+.player-score {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.player-score.active-player {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  background: #ecf0f1;
+}
+
+.player-name {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.player-points {
+  display: block;
+  font-size: 24px;
+  color: #27ae60;
+  font-weight: bold;
+}
+
 #board {
   display: grid;
   grid-template-columns: repeat(15, 40px);
@@ -24,10 +151,89 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  position: relative;
+  font-size: 18px;
+}
+
+/* Premium Square Styles */
+.premium-label {
+  position: absolute;
+  font-size: 6px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.1;
+  pointer-events: none;
+  width: 100%;
+  color: white;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+/* Triple Word Score - Red */
+.cell.tw {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  border-color: #c0392b;
+}
+
+/* Double Word Score - Pink */
+.cell.dw {
+  background: linear-gradient(135deg, #e8b4b8 0%, #d89ca1 100%);
+  border-color: #d89ca1;
+}
+
+.cell.dw .premium-label {
+  color: #8B0000;
+  text-shadow: none;
+}
+
+/* Triple Letter Score - Blue */
+.cell.tl {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border-color: #2980b9;
+}
+
+/* Double Letter Score - Light Blue */
+.cell.dl {
+  background: linear-gradient(135deg, #a8d8ea 0%, #7fb3d5 100%);
+  border-color: #7fb3d5;
+}
+
+.cell.dl .premium-label {
+  color: #1a5276;
+  text-shadow: none;
+}
+
+/* Center Star - Pink/Red */
+.cell.star {
+  background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+  border-color: #ff1493;
+}
+
+.cell.star .premium-label {
+  font-size: 30px;
+  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* When tile is placed on premium square, hide the label */
+.cell.tw:not(:empty) .premium-label,
+.cell.dw:not(:empty) .premium-label,
+.cell.tl:not(:empty) .premium-label,
+.cell.dl:not(:empty) .premium-label,
+.cell.star:not(:empty) .premium-label {
+  display: none;
+}
+
+/* Tile letter should be visible on premium squares */
+.cell.tw, .cell.dw, .cell.tl, .cell.dl, .cell.star {
+  color: #000;
+  z-index: 1;
 }
 
 #rack {
   margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 60px;
 }
 
 .tile {
@@ -42,4 +248,157 @@ body {
   font-size: 20px;
   font-weight: bold;
   line-height: 40px;
+  transition: all 0.2s ease;
+}
+
+.tile:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.tile:active {
+  cursor: grabbing;
+}
+
+.tile.dragging {
+  opacity: 0.5;
+}
+
+/* Trash Bin Styling */
+#trash-bin {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  border: 3px dashed #fff;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+#trash-bin:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+}
+
+#trash-bin.trash-hover {
+  background: linear-gradient(145deg, #27ae60, #229954);
+  transform: scale(1.1);
+  animation: pulse 0.5s infinite;
+}
+
+.trash-label {
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  margin-top: 5px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.exchange-msg {
+  position: absolute;
+  top: -30px;
+  background: #27ae60;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  animation: slideUp 1.5s ease;
+}
+
+@keyframes slideUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes trashShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+#controls {
+  margin-top: 20px;
+}
+
+#controls button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background: #4CAF50;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+#controls button:hover {
+  background: #45a049;
+}
+
+#score {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+  display: none; /* Hide in multiplayer mode */
+}
+
+/* Premium Square Styles - Updated */
+.premium-label {
+  position: absolute;
+  font-size: 6px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.1;
+  pointer-events: none;
+  width: 100%;
+  color: white;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* Make sure tile letters appear on top of premium squares */
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #aaa;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  position: relative;
+  font-size: 18px;
+  color: #000;
+}
+
+/* Tile text should be above the label */
+.cell {
+  z-index: 1;
+}
+
+/* When tile is placed, hide premium label but keep background color */
+.cell.tw:not(:empty) .premium-label,
+.cell.dw:not(:empty) .premium-label,
+.cell.tl:not(:empty) .premium-label,
+.cell.dl:not(:empty) .premium-label,
+.cell.star:not(:empty) .premium-label {
+  opacity: 0.2; /* Fade out instead of hiding completely */
 }

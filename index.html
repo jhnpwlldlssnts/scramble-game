@@ -8,18 +8,27 @@
 </head>
 <body>
   <h1>ScrableThisLettersInYoMouth</h1>
-
+  
+  <!-- Player Turn Indicator -->
+  <div id="current-turn">Player 1's Turn</div>
+  
+  <!-- Scoreboard -->
+  <div id="scoreboard"></div>
+  
   <div id="board"></div>
-
   <div id="rack"></div>
-
+  
+  <!-- Trash Bin for Exchanging Tiles -->
+  <div id="trash-bin">
+    🗑️
+    <div class="trash-label">Drag Here to Exchange</div>
+  </div>
+  
   <div id="controls">
     <button id="shuffle">Shuffle This Tiles</button>
     <button id="submit">Submit to Me you Twink</button>
     <p id="score">DumAss Score: 0</p>   
   </div>
-
-  <!-- Add this line to load your JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
